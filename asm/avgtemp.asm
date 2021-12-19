@@ -1,0 +1,30 @@
+DATA SEGMENT
+    T1 DB 19H   ;25 IN HEX
+    T2 DB 11H   ;17 IN HEX
+    AVG DW ?
+DATA ENDS
+
+CODE SEGMENT
+ASSUME CS:CODE,DS:DATA
+START:
+
+    MOV AX,DATA
+    MOV DS,AX
+    
+    MOV AL,T1
+    ADD AL,T2   ;ADD T1 ADN T2
+    
+    MOV AH,00
+    
+    ADC AH,00   ;COLLECT IF CARRY IS GENERATED
+    
+    MOV BL,2    ;BL <- 0000 0010 = 02 I
+    DIV BL      ;AX/BYTE(BL)
+    
+    MOV AVG,AX
+    
+    MOV AH,4CH
+    INT 21H
+    
+CODE ENDS
+END START
